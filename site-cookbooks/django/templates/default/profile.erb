@@ -1,0 +1,67 @@
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
+
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
+    fi
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+PROJECT_ROOT="/vagrant/django"
+APP_ROOT="$PROJECT_ROOT/app"
+
+# helpers
+alias ..="cd .."
+
+# django
+
+alias dj_env="source /opt/env/.django/bin/activate"
+
+dj_server() {
+    dj_env
+    python $APP_ROOT/manage.py runserver [::]:8000
+}
+
+dj_make() {
+    dj_env
+    python $APP_ROOT/manage.py makemigrations
+}
+
+dj_migrate() {
+    dj_env
+    python $APP_ROOT/manage.py migrate
+}
+
+dj_shell() {
+    dj_env
+    python $APP_ROOT/manage.py shell
+}
+
+dj_validate() {
+    dj_env
+    python $APP_ROOT/manage.py validate
+}
+
+pip_install() {
+    dj_env
+    pip install -r $PROJECT_ROOT/requirements.txt
+}
+
+pip_freeze() {
+    dj_env
+    pip freeze > $PROJECT_ROOT/requirements.txt
+}

@@ -1,0 +1,53 @@
+{
+    "name": "dev",
+    "description": "Django Development Environment",
+    "cookbook_versions": {
+    },
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {
+    },
+    "override_attributes": {
+      "base": {
+        "extra_packages": []
+      },
+      "python" : {
+        "install_method" : "package"
+      },
+      "postgresql" : {
+        "password" : {
+          "postgres" : "randompassisbetter"
+        },
+        "pg_hba" : [
+          {"type" : "local", "db": "all" , "user": "postgres", "addr" : "", "method" : "ident" },
+          {"type" : "local", "db": "django", "user" : "django", "method" : "md5" }
+        ]
+      },
+      "django": {
+        "postgresql" : {
+          "database" : "django",
+          "user": "django",
+          "password" : "django",
+          "encoding" : "UTF-8"
+        },
+        "nginx": {
+          "server_name": "django.io"
+        },
+        "gunicorn": {
+          "working_dir": "/django/app",
+          "port": "26456",
+          "workers": 2,
+          "timeout": 60,
+          "settings": "base.settings",
+          "app": "ds3"
+        },
+        "python": {
+          "packages": ["django", "gunicorn"],
+          "venv_dir" : "/opt/env/",
+          "username": "vagrant",
+          "gid": "vagrant"
+        },
+        "log_dir": "/var/log/django"
+      }
+    }
+}

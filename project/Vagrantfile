@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "ubuntu-trusty-64"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+
+  config.vm.synced_folder "./django", "/django"
+   config.vm.provider "virtualbox" do |vb|
+     vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
+
+  config.vm.network "forwarded_port", guest: 80, host: 8001
+  config.vm.network "forwarded_port", guest: 8000, host: 8888
+
+  config.librarian_chef.cheffile_dir = "../"
+
+  config.vm.provision "chef_solo" do |chef|
+    chef.data_bags_path = "../data_bags"
+    chef.cookbooks_path = [ "../site-cookbooks",  "../cookbooks"]
+    chef.roles_path =  "../roles"
+    chef.environments_path = '../environments'
+    chef.add_role("django")
+    chef.environment = "django"
+    chef.json = {}
+  end
+end

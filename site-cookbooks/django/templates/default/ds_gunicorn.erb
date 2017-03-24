@@ -1,0 +1,21 @@
+description "django app"
+start on runlevel [2345]
+stop on runlevel [06]
+respawn
+respawn limit 10 5
+
+script
+      LOGDIR=<%= node['django']['log_dir']%>
+      cd <%= node['django']['gunicorn']['working_dir'] %>
+      exec <%= node['django']['python']['venv_dir']%>.django/bin/gunicorn <%= node['django']['gunicorn']['app'] %> \
+               -w <%= node['django']['gunicorn']['workers'] %> \
+               -t <%= node['django']['gunicorn']['timeout']%> \
+              --user=<%= node['django']['python']['username']%> \
+              --group=<%= node['django']['python']['gid']%> \
+              --log-level=debug \
+              --name=<%= node['django']['gunicorn']['app'] %> \
+              -b 127.0.0.1:<%= node['django']['gunicorn']['port']%> \
+              --log-file=<%= node['django']['log_dir']%>/django.log 2>><%= node['django']['log_dir']%>/django.log 
+              \ --settings=<%= node['django']['gunicorn']['settings'] %>
+end script
+

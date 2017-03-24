@@ -1,0 +1,40 @@
+user <%=  node['nt_nginx']['user'] %>;
+worker_processes  <%=  node['nt_nginx']['worker_processes'] %>;
+
+error_log  /var/log/nginx/error.log;
+pid  <%=  node['nt_nginx']['pid'] %> ;
+
+events {
+  worker_connections   <%=  node['nt_nginx']['worker_connections'] %> ;
+}
+
+http {
+
+  include       /etc/nginx/mime.types;
+  default_type  application/octet-stream;
+
+  access_log    /var/log/nginx/access.log;
+
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+  ssl on;
+  
+
+  gzip  <%=  node['nt_nginx']['gzip'] %>;
+  gzip_http_version <%=  node['nt_nginx']['gzip_http_version'] %>;
+  gzip_comp_level <%=  node['nt_nginx']['gzip_comp_level'] %>;
+  gzip_proxied <%=  node['nt_nginx']['gzip_proxied'] %>;
+  gzip_vary <%=  node['nt_nginx']['gzip_vary'] %>;
+  gzip_buffers <%=  node['nt_nginx']['gzip_buffers'] %>;
+  gzip_types <%=  node['nt_nginx']['gzip_types'] %>;
+  gzip_min_length  1000;
+  gzip_disable     "MSIE [1-6]\.";
+
+  server_names_hash_bucket_size 64;
+  types_hash_max_size 2048;
+  types_hash_bucket_size 64;
+
+  include /etc/nginx/conf.d/*.conf;
+  include /etc/nginx/sites-enabled/*;
+}
