@@ -46,6 +46,11 @@ dj_migrate() {
     python $APP_ROOT/manage.py migrate
 }
 
+dj_collectstatic() {
+    dj_env
+    python $APP_ROOT/manage.py collectstatic
+}
+
 dj_shell() {
     dj_env
     python $APP_ROOT/manage.py shell

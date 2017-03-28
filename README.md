@@ -10,8 +10,8 @@ vagrant ssh
 pip_install
 dj_migrate
 dj_create_super
+dj_collectstatic
 dj_server
-
 ```
 Then, visit `http://localhost:8888` in host machine's web broswer
 
