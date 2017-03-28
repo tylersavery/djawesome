@@ -1,5 +1,20 @@
 # django-vagrant-chef #
 
+
+# Quick Start #
+
+```
+cd project
+vagrant up
+vagrant ssh
+pip_install
+dj_migrate
+dj_create_super
+dj_server
+
+```
+Then, visit `http://localhost:8888` in host machine's web broswer
+
 Chef recipes to provisioning a django stack on vagrant:
 
 * Python virtualenv.
@@ -27,7 +42,7 @@ Install the next vagrant plugins before provisioning your box:
 
 
 ## Roles ##
-The *django* role run all the recipes required to deploy a django devbox, you will need to add 
+The *django* role run all the recipes required to deploy a django devbox, you will need to add
 it to the vagrant configuration:
 
 
@@ -51,7 +66,7 @@ end
 
 ## Environments ##
 
-Instead of modifing default attributes, these cookbooks use chef enviroments feature, all 
+Instead of modifing default attributes, these cookbooks use chef enviroments feature, all
 configuration values are defined in environments/django.json , in order to pass these parameters to
 vagrant is required to speciy enviroment directory inside vagrant configuration file:
 
@@ -103,7 +118,7 @@ to setting up dajngo vagrant box. All we have to do is specify configuration par
 
 ### Django ###
 
-Recipes that install postgresql, python, nginx and gunicorn. Attributes should be described on 
+Recipes that install postgresql, python, nginx and gunicorn. Attributes should be described on
 enviroments/django.json file.
 
 Postgresql app db configuration:
