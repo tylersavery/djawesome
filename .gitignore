@@ -12,6 +12,8 @@ project/.vagrant
 ## Project
 public/static
 public/media
+project/django/app/base/static/
+~project/django/app/base/static/readme
 
 ## SQLite3
 *.sqlite3
