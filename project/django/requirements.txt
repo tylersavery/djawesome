@@ -1,6 +1,6 @@
 appdirs==1.4.3
 Django==1.10.6
-django-debug-toolbar==1.7
+django-debug-toolbar==1.11.1
 gunicorn==19.7.1
 packaging==16.8
 psycopg2==2.7.1
