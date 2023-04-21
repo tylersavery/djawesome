@@ -6,4 +6,4 @@ packaging==16.8
 psycopg2==2.7.1
 pyparsing==2.2.0
 six==1.10.0
-sqlparse==0.2.3
+sqlparse==0.4.4
